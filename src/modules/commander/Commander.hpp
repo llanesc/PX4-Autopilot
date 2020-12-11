@@ -120,7 +120,8 @@ public:
 private:
 	void answer_command(const vehicle_command_s &cmd, uint8_t result);
 
-	transition_result_t arm_disarm(bool arm, bool run_preflight_checks, arm_disarm_reason_t calling_reason);
+	transition_result_t arm(arm_disarm_reason_t calling_reason, bool run_preflight_checks = true);
+	transition_result_t disarm(arm_disarm_reason_t calling_reason);
 
 	void battery_status_check();
 
@@ -152,7 +153,6 @@ private:
 
 	void offboard_control_update();
 
-	void print_reject_arm(const char *msg);
 	void print_reject_mode(const char *msg);
 
 	void reset_posvel_validity(bool *changed);
@@ -172,9 +172,6 @@ private:
 
 	// Set the main system state based on RC and override device inputs
 	transition_result_t set_main_state(bool *changed);
-
-	// Enable override (manual reversion mode) on the system
-	transition_result_t set_main_state_override_on(bool *changed);
 
 	// Set the system main state based on the current RC inputs
 	transition_result_t set_main_state_rc(bool *changed);
@@ -385,15 +382,18 @@ private:
 
 	main_state_t	_main_state_pre_offboard{commander_state_s::MAIN_STATE_MANUAL};
 
-	actuator_armed_s	_armed{};
-	commander_state_s	_internal_state{};
 	cpuload_s		_cpuload{};
 	geofence_result_s	_geofence_result{};
 	vehicle_land_detected_s	_land_detector{};
 	safety_s		_safety{};
-	vehicle_status_s	_status{};
-	vehicle_status_flags_s	_status_flags{};
 	vtol_vehicle_status_s	_vtol_status{};
+
+	// commander publications
+	actuator_armed_s        _armed{};
+	commander_state_s       _internal_state{};
+	vehicle_control_mode_s  _vehicle_control_mode{};
+	vehicle_status_s        _status{};
+	vehicle_status_flags_s  _status_flags{};
 
 	WorkerThread _worker_thread;
 
