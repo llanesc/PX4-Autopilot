@@ -34,8 +34,13 @@ function spawn_model() {
 	python3 ${src_path}/Tools/sitl_gazebo/scripts/jinja_gen.py ${src_path}/Tools/sitl_gazebo/models/${MODEL}/${MODEL}.sdf.jinja ${src_path}/Tools/sitl_gazebo --mavlink_tcp_port $((4560+${N})) --mavlink_udp_port $((14560+${N})) --output-file /tmp/${MODEL}_${N}.sdf
 
 	echo "Spawning ${MODEL}_${N}"
-
-	gz model --spawn-file=/tmp/${MODEL}_${N}.sdf --model-name=${MODEL}_${N} -x 0.0 -y $((3*${N})) -z 0.0
+  if [ $N -eq 0 ]
+  then
+	  gz model --spawn-file=/tmp/${MODEL}_${N}.sdf --model-name=${MODEL}_${N} -x 0.0 -y 0.0 -z 0.0 -R 0.0 -P 0.0 -Y 1.5707963
+	elif [ $N -eq 1 ]
+	then
+	  gz model --spawn-file=/tmp/${MODEL}_${N}.sdf --model-name=${MODEL}_${N} -x 1.0 -y 0.0 -z 0.0 -R 0.0 -P 0.0 -Y 1.5707963
+  fi
 
 	popd &>/dev/null
 

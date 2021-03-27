@@ -1,0 +1,18 @@
+<launch>
+    <param name="iris0" textfile="/home/llanesc/PX4/PX4-Autopilot/Tools/sitl_gazebo/models/iris/iris0.xml" />
+    <param name="iris1" textfile="/home/llanesc/PX4/PX4-Autopilot/Tools/sitl_gazebo/models/iris/iris1.xml" />
+    <node type="rviz" name="rviz" pkg="rviz"/>
+    <node name="mav_plotter" pkg="mav_plotter" type="mav_plotter_node"/>
+    <node name="hector_trajectory_server1" pkg="hector_trajectory_server" type="hector_trajectory_server" ns="uav0/">
+	<param name="target_frame_name" value="uav0"/>
+	<param name="source_frame_name" value="map"/>
+	<param name="trajectory_update_rate" value="50"/>   
+	<param name="trajectory_publish_rate" value="25"/>
+    </node>
+    <node name="hector_trajectory_server2" pkg="hector_trajectory_server" type="hector_trajectory_server" ns="uav1/">
+        <param name="target_frame_name" value="uav1"/>
+        <param name="source_frame_name" value="map"/>
+        <param name="trajectory_update_rate" value="50"/> 
+        <param name="trajectory_publish_rate" value="25"/>
+    </node>
+</launch>

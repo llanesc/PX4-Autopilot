@@ -13,4 +13,4 @@ then
 	param set MC_ROLLRATE_P 0.1
 fi
 
-set MIXER quad_x
+set MIXER quad_pass

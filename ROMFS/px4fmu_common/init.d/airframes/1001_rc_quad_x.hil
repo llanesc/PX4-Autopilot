@@ -10,7 +10,8 @@
 
 . ${R}etc/init.d/rc.mc_defaults
 
-set MIXER quad_x
-set PWM_OUT 1234
+//set MIXER quad_x
+//set PWM_OUT 1234
+set MIXER quad_pass
 
 param set SYS_HITL 1
